@@ -229,12 +229,18 @@ class HomeViewController: UIViewController {
             return
         }
         
+        if decimal == false {
         resultLabel.text = resultLabel.text! + kDecimalSeparator!
         decimal = true
+            
+        } else {
+            return
+        }
         
         selecVisualOperation()
         
         sender.shine()
+        print("\(decimal)")
     }
     
     @IBAction func numberAction(_ sender: UIButton) {
@@ -258,8 +264,8 @@ class HomeViewController: UIViewController {
         
         // seleccionando decimales
         if decimal {
-            currentTemp = "\(currentTemp)\(kDecimalSeparator)"
-            decimal = false
+            currentTemp = currentTemp + kDecimalSeparator!
+//            decimal = false
         }
         
         let number = sender.tag
@@ -310,7 +316,7 @@ class HomeViewController: UIViewController {
             break
         }
         
-        // Formateo en pantalla
+        // Formato en pantalla
         
         if let currentTotal = auxTotalFormater.string(from: NSNumber(value: total)), currentTotal.count > kMaxLenght {
             resultLabel.text = printScientificFormatter.string(from: NSNumber(value: total))
