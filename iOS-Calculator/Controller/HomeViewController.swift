@@ -336,7 +336,7 @@ class HomeViewController: UIViewController {
             resultLabel.text = printFormatter.string(from: NSNumber(value: total))
         }
         
-        operation = .none
+//        operation = .none
         
         selecVisualOperation()
         
