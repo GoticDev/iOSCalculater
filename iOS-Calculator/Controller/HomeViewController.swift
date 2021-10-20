@@ -41,6 +41,7 @@ class HomeViewController: UIViewController {
     private var temp: Double = 0
     private var operating = false
     private var decimal = false
+    private var decimal2 = false
     private var operation: OperationType = .none
     
     // MARK: - constantes
@@ -167,6 +168,7 @@ class HomeViewController: UIViewController {
         if operation != .percent {
             result()
         }
+        decimal = false
         operating = true
         operation = .percent
         result()
@@ -183,6 +185,7 @@ class HomeViewController: UIViewController {
             result()
         }
         
+        decimal = false
         operating = true
         operation = .addiction
         sender.selectOperation(true)
@@ -194,6 +197,7 @@ class HomeViewController: UIViewController {
             result()
         }
         
+        decimal = false
         operating = true
         operation = .sustraction
         sender.selectOperation(true)
@@ -205,6 +209,7 @@ class HomeViewController: UIViewController {
             result()
         }
         
+        decimal = false
         operating = true
         operation = .multiplication
         sender.selectOperation(true)
@@ -216,6 +221,7 @@ class HomeViewController: UIViewController {
             result()
         }
         
+        decimal = false
         operating = true
         operation = .division
         sender.selectOperation(true)
@@ -225,13 +231,15 @@ class HomeViewController: UIViewController {
     
     @IBAction func numberDecimalAction(_ sender: UIButton) {
         let currentTemp = auxTotalFormater.string(from: NSNumber(value: temp))!
+        
         if !operating && currentTemp.count >= kMaxLenght {
             return
         }
         
-        if decimal == false {
+        if !decimal {
         resultLabel.text = resultLabel.text! + kDecimalSeparator!
         decimal = true
+        decimal2 = true
             
         } else {
             return
@@ -246,13 +254,15 @@ class HomeViewController: UIViewController {
     @IBAction func numberAction(_ sender: UIButton) {
         operatorAC.setTitle("C", for: .normal)
         
-        var currentTemp = auxTotalFormater.string(from: NSNumber(value: temp))!
+//        var currentTemp = auxTotalFormater.string(from: NSNumber(value: temp))!
+        var currentTemp = auxFormater.string(from: NSNumber(value: temp))!
+        let number = sender.tag
         
         if !operating && currentTemp.count >= kMaxLenght {
             return
         }
         
-        currentTemp = auxFormater.string(from: NSNumber(value: temp))!
+//        currentTemp = auxFormater.string(from: NSNumber(value: temp))!
         
         // seleccionando una operacion
         if operating {
@@ -263,23 +273,25 @@ class HomeViewController: UIViewController {
         }
         
         // seleccionando decimales
-        if decimal {
+        if decimal && decimal2 {
             currentTemp = currentTemp + kDecimalSeparator!
-//            decimal = false
+            decimal2 = false
         }
         
-        let number = sender.tag
+        
         temp = Double(currentTemp + String(number))!
         resultLabel.text = printFormatter.string(from: NSNumber(value: temp))
         
         selecVisualOperation()
         
         sender.shine()
+        print("currentTemp: \(currentTemp) y tag \(number)")
     }
     
     // Limpia los valores
     private func clear() {
         operation = .none
+        decimal = false
         operatorAC.setTitle("AC", for: .normal)
         if temp != 0 || total != 0 {
             temp = 0
