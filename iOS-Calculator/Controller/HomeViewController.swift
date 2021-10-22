@@ -185,6 +185,7 @@ class HomeViewController: UIViewController {
             result()
         }
         
+        clearBackground()
         decimal = false
         operating = true
         operation = .addiction
@@ -197,6 +198,7 @@ class HomeViewController: UIViewController {
             result()
         }
         
+        clearBackground()
         decimal = false
         operating = true
         operation = .sustraction
@@ -209,6 +211,7 @@ class HomeViewController: UIViewController {
             result()
         }
         
+        clearBackground()
         decimal = false
         operating = true
         operation = .multiplication
@@ -221,6 +224,7 @@ class HomeViewController: UIViewController {
             result()
         }
         
+        clearBackground()
         decimal = false
         operating = true
         operation = .division
@@ -349,10 +353,8 @@ class HomeViewController: UIViewController {
         
         if !operating {
             // No estamos operando
-            operationAdition.selectOperation(false)
-            operatorSustraction.selectOperation(false)
-            operatorMultiplication.selectOperation(false)
-            operatorDivision.selectOperation(false)
+            clearBackground()
+            
         } else {
             switch operation {
             case .none, .percent:
@@ -387,5 +389,12 @@ class HomeViewController: UIViewController {
                 break
             }
         }
+    }
+    
+    private func clearBackground() {
+        operationAdition.selectOperation(false)
+        operatorSustraction.selectOperation(false)
+        operatorMultiplication.selectOperation(false)
+        operatorDivision.selectOperation(false)
     }
 }
